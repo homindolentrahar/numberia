@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:numberia/features/number_trivia/domain/entities/number_trivia.dart';
-import 'package:numberia/features/number_trivia/presentation/bloc/number_trivia_cubit.dart';
-import 'package:numberia/injection_container.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:numberia/core/common/animations/fade_animation.dart';
 import 'package:numberia/core/common/themes/color_palette.dart';
+import 'package:numberia/features/number_trivia/domain/entities/number_trivia.dart';
+import 'package:numberia/features/number_trivia/presentation/bloc/number_trivia_cubit.dart';
 import 'package:numberia/features/number_trivia/presentation/widgets/rounded_text_field.dart';
+import 'package:numberia/injection_container.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         BlocBuilder<NumberTriviaCubit, NumberTriviaState>(
-          cubit: _cubit,
+          bloc: _cubit,
           buildWhen: (previous, current) => previous != current,
           builder: (ctx, state) {
             if (state is Empty) {
@@ -110,33 +110,36 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _buildTriviaResult(NumberTrivia trivia) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          trivia.number.toString(),
-          style: GoogleFonts.comfortaa(
-            color: ColorPalette.white,
-            fontSize: 36,
-            fontWeight: FontWeight.w600,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            trivia.number.toString(),
+            style: GoogleFonts.comfortaa(
+              color: ColorPalette.white,
+              fontSize: 36,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ),
-        SizedBox(height: 10),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.1,
-          child: SingleChildScrollView(
-            child: Text(
-              trivia.text,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.firaCode(
-                color: ColorPalette.light,
-                fontSize: 16,
+          SizedBox(height: 10),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.1,
+            child: SingleChildScrollView(
+              child: Text(
+                trivia.text,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.firaCode(
+                  color: ColorPalette.light,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:numberia/core/error/exceptions.dart';
 import 'package:numberia/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:numberia/features/number_trivia/data/sources/number_trivia_remote_data_source.dart';
-import 'package:http/http.dart' as http;
 
 import '../../../../core/fixtures/fixture_reader.dart';
 
@@ -44,7 +44,7 @@ void main() {
         dataSource.getConcreteNumberTrivia(testNumber);
         // Assert
         verify(mockHttpClient.get(
-          'http://numbersapi.com/$testNumber',
+          Uri.parse("http://numbersapi.com/${testNumber}"),
           headers: {'Content-Type': 'application/json'},
         ));
       },
@@ -88,7 +88,7 @@ void main() {
         dataSource.getRandomNumberTrivia();
         // Assert
         verify(mockHttpClient.get(
-          'http://numbersapi.com/random',
+          Uri.parse("http://numbersapi.com/random"),
           headers: {'Content-Type': 'application/json'},
         ));
       },
