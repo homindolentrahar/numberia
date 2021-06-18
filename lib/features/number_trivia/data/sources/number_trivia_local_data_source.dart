@@ -17,13 +17,13 @@ abstract class NumberTriviaLocalDataSource {
 const CACHED = "CACHED";
 
 class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
-  final Box box;
+  final Box? box;
 
   NumberTriviaLocalDataSourceImpl(this.box);
 
   @override
   Future<NumberTriviaModel> getLastNumberTrivia() {
-    final jsonString = box.get(CACHED);
+    final jsonString = box!.get(CACHED);
     if (jsonString != null) {
       return Future.value(NumberTriviaModel.fromJson(json.decode(jsonString)));
     } else {
@@ -34,6 +34,6 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
   @override
   Future<void> cacheNumberTrivia(NumberTriviaModel model) {
     final data = json.encode(model.toJson());
-    return box.put(CACHED, data);
+    return box!.put(CACHED, data);
   }
 }

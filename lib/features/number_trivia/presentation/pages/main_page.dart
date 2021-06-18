@@ -129,7 +129,7 @@ class _MainPageState extends State<MainPage> {
             height: MediaQuery.of(context).size.height * 0.1,
             child: SingleChildScrollView(
               child: Text(
-                trivia.text,
+                trivia.text!,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.firaCode(
                   color: ColorPalette.light,

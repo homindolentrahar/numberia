@@ -7,9 +7,9 @@ class RoundedOutlineButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const RoundedOutlineButton({
-    Key key,
-    @required this.text,
-    @required this.onPressed,
+    Key? key,
+    required this.text,
+    required this.onPressed,
   }) : super(key: key);
 
   @override

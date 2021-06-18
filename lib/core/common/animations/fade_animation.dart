@@ -7,12 +7,12 @@ enum FadeAnimationProps { OPACITY, TRANSLATE_Y }
 enum FadeAnimationDirections { UP, DOWN, LEFT, RIGHT }
 
 class FadeAnimation extends StatelessWidget {
-  final Widget child;
-  final FadeAnimationDirections direction;
-  final double delay;
+  final Widget? child;
+  final FadeAnimationDirections? direction;
+  final double? delay;
 
   const FadeAnimation({
-    Key key,
+    Key? key,
     this.direction,
     this.delay,
     this.child,
@@ -40,13 +40,13 @@ class FadeAnimation extends StatelessWidget {
           )
           .animate(
             FadeAnimationProps.TRANSLATE_Y,
-            tween: _yTweens[direction].tweenTo(Offset.zero),
+            tween: _yTweens[direction!]!.tweenTo(Offset.zero),
             curve: Curves.easeInSine,
           );
 
     return PlayAnimation<TimelineValue<FadeAnimationProps>>(
       duration: _tween.duration,
-      delay: (delay * 700).round().milliseconds,
+      delay: (delay! * 700).round().milliseconds,
       tween: _tween,
       child: child,
       builder: (ctx, child, animation) => Opacity(

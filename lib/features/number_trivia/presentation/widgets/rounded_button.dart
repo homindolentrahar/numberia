@@ -9,11 +9,11 @@ class RoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const RoundedButton({
-    Key key,
-    @required this.text,
-    @required this.textColor,
-    @required this.bgColor,
-    @required this.onPressed,
+    Key? key,
+    required this.text,
+    required this.textColor,
+    required this.bgColor,
+    required this.onPressed,
   }) : super(key: key);
 
   @override

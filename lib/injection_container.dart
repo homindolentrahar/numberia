@@ -1,8 +1,6 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
-import 'package:numberia/core/network/network_info.dart';
 import 'package:numberia/core/util/input_converter.dart';
 import 'package:numberia/features/number_trivia/data/repositories/number_trivia_repository_impl.dart';
 import 'package:numberia/features/number_trivia/data/sources/number_trivia_local_data_source.dart';
@@ -43,7 +41,7 @@ void initFeatures() {
     () => NumberTriviaRepositoryImpl(
       remote: locator<NumberTriviaRemoteDataSource>(),
       local: locator<NumberTriviaLocalDataSource>(),
-      networkInfo: locator<NetworkInfo>(),
+      // networkInfo: locator<NetworkInfo>(),
     ),
   );
   // Data Sources
@@ -56,13 +54,11 @@ void initFeatures() {
 void initCore() {
   locator.registerLazySingleton<InputConverter>(() => InputConverter());
 
-  locator.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(locator<DataConnectionChecker>()));
+  // locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator<DataConnectionChecker>()));
 }
 
 void initExternal() {
   locator.registerLazySingleton<Box>(() => Hive.box(CACHE_BOX));
   locator.registerLazySingleton<http.Client>(() => http.Client());
-  locator.registerLazySingleton<DataConnectionChecker>(
-      () => DataConnectionChecker());
+  // locator.registerLazySingleton<DataConnectionChecker>(() => DataConnectionChecker());
 }

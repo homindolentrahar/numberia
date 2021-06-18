@@ -17,10 +17,10 @@ class MockGetConcreteNumberTrivia extends Mock
 class MockGetRandomNumberTrivia extends Mock implements GetRandomNumberTrivia {}
 
 void main() {
-  MockInputConverter mockInputConverter;
-  MockGetConcreteNumberTrivia mockConcrete;
-  MockGetRandomNumberTrivia mockRandom;
-  NumberTriviaCubit cubit;
+  late MockInputConverter mockInputConverter;
+  late MockGetConcreteNumberTrivia mockConcrete;
+  late MockGetRandomNumberTrivia mockRandom;
+  NumberTriviaCubit? cubit;
 
   setUp(() {
     mockInputConverter = MockInputConverter();
@@ -36,7 +36,7 @@ void main() {
 
   test('initialState should bbe Empty', () {
     //  assert
-    expect(cubit.state, Empty());
+    expect(cubit!.state, Empty());
   });
 
   group('GetTriviaForConcreteNumber', () {
@@ -45,11 +45,11 @@ void main() {
     final testNumberTrivia = NumberTrivia(text: 'test text', number: 1);
 
     void setupMockInputConverterSuccess() =>
-        when(mockInputConverter.stringToUnsignedInteger(any))
+        when(mockInputConverter.stringToUnsignedInteger(any!))
             .thenReturn(Right(testNumberParsed));
 
     void setupMockInputConverterFailure() =>
-        when(mockInputConverter.stringToUnsignedInteger(any))
+        when(mockInputConverter.stringToUnsignedInteger(any!))
             .thenReturn(Left(InvalidInputFailure()));
 
     test(
@@ -58,8 +58,8 @@ void main() {
         // Arrange
         setupMockInputConverterSuccess();
         // Act
-        cubit.getTriviaForConcreteNumber(testNumberString);
-        await untilCalled(mockInputConverter.stringToUnsignedInteger(any));
+        cubit!.getTriviaForConcreteNumber(testNumberString);
+        await untilCalled(mockInputConverter.stringToUnsignedInteger(any!));
         // Assert
         verify(mockInputConverter.stringToUnsignedInteger(testNumberString));
       },
@@ -74,7 +74,7 @@ void main() {
         final emittedState = [Error(message: INVALID_INPUT_FAILURE_MESSAGE)];
         expectLater(cubit, emitsInOrder(emittedState));
         // Act
-        cubit.getTriviaForConcreteNumber(testNumberString);
+        cubit!.getTriviaForConcreteNumber(testNumberString);
       },
     );
 
@@ -83,11 +83,11 @@ void main() {
       () async {
         // Arrange
         setupMockInputConverterSuccess();
-        when(mockConcrete(any))
+        when(mockConcrete(any!))
             .thenAnswer((_) async => Right(testNumberTrivia));
         // Act
-        cubit.getTriviaForConcreteNumber(testNumberString);
-        await untilCalled(mockConcrete(any));
+        cubit!.getTriviaForConcreteNumber(testNumberString);
+        await untilCalled(mockConcrete(any!));
         // Assert
         verify(mockConcrete(Params(number: testNumberParsed)));
       },
@@ -98,7 +98,7 @@ void main() {
       () async {
         // Arrange
         setupMockInputConverterSuccess();
-        when(mockConcrete(any))
+        when(mockConcrete(any!))
             .thenAnswer((_) async => Right(testNumberTrivia));
         // Assert later
         final emittedState = [
@@ -107,7 +107,7 @@ void main() {
         ];
         expectLater(cubit, emitsInOrder(emittedState));
         // Act
-        cubit.getTriviaForConcreteNumber(testNumberString);
+        cubit!.getTriviaForConcreteNumber(testNumberString);
       },
     );
 
@@ -116,7 +116,7 @@ void main() {
       () async {
         // Arrange
         setupMockInputConverterSuccess();
-        when(mockConcrete(any)).thenAnswer((_) async => Left(ServerFailure()));
+        when(mockConcrete(any!)).thenAnswer((_) async => Left(ServerFailure()));
         // Assert later
         final emittedState = [
           Loading(),
@@ -124,7 +124,7 @@ void main() {
         ];
         expectLater(cubit, emitsInOrder(emittedState));
         // Assert
-        cubit.getTriviaForConcreteNumber(testNumberString);
+        cubit!.getTriviaForConcreteNumber(testNumberString);
       },
     );
 
@@ -133,7 +133,7 @@ void main() {
       () async {
         // Arrange
         setupMockInputConverterSuccess();
-        when(mockConcrete(any)).thenAnswer((_) async => Left(CacheFailure()));
+        when(mockConcrete(any!)).thenAnswer((_) async => Left(CacheFailure()));
         // Assert later
         final emittedState = [
           Loading(),
@@ -141,7 +141,7 @@ void main() {
         ];
         expectLater(cubit, emitsInOrder(emittedState));
         // Assert
-        cubit.getTriviaForConcreteNumber(testNumberString);
+        cubit!.getTriviaForConcreteNumber(testNumberString);
       },
     );
   });
@@ -153,10 +153,10 @@ void main() {
       'should get data from the random use case',
       () async {
         // Arrange
-        when(mockRandom(any)).thenAnswer((_) async => Right(testNumberTrivia));
+        when(mockRandom(any!)).thenAnswer((_) async => Right(testNumberTrivia));
         // Act
-        cubit.getTriviaForRandomNumber();
-        await untilCalled(mockRandom(any));
+        cubit!.getTriviaForRandomNumber();
+        await untilCalled(mockRandom(any!));
         // Assert
         verify(mockRandom(NoParams()));
       },
@@ -166,7 +166,7 @@ void main() {
       'should emit [Loading, Loaded] when data is gotten successfully',
       () async {
         // Arrange
-        when(mockRandom(any))
+        when(mockRandom(any!))
             .thenAnswer((_) async => Right(testNumberTrivia));
         // Assert later
         final emittedState = [
@@ -175,7 +175,7 @@ void main() {
         ];
         expectLater(cubit, emitsInOrder(emittedState));
         // Act
-        cubit.getTriviaForRandomNumber();
+        cubit!.getTriviaForRandomNumber();
       },
     );
 
@@ -183,7 +183,7 @@ void main() {
       'should emit [Loading, Error] when getting data fails',
       () async {
         // Arrange
-        when(mockRandom(any)).thenAnswer((_) async => Left(ServerFailure()));
+        when(mockRandom(any!)).thenAnswer((_) async => Left(ServerFailure()));
         // Assert later
         final emittedState = [
           Loading(),
@@ -191,7 +191,7 @@ void main() {
         ];
         expectLater(cubit, emitsInOrder(emittedState));
         // Assert
-        cubit.getTriviaForRandomNumber();
+        cubit!.getTriviaForRandomNumber();
       },
     );
 
@@ -199,7 +199,7 @@ void main() {
       'should emit [Loading, Error] with proper message for the error when getting data fails',
       () async {
         // Arrange
-        when(mockRandom(any)).thenAnswer((_) async => Left(CacheFailure()));
+        when(mockRandom(any!)).thenAnswer((_) async => Left(CacheFailure()));
         // Assert later
         final emittedState = [
           Loading(),
@@ -207,7 +207,7 @@ void main() {
         ];
         expectLater(cubit, emitsInOrder(emittedState));
         // Assert
-        cubit.getTriviaForRandomNumber();
+        cubit!.getTriviaForRandomNumber();
       },
     );
   });

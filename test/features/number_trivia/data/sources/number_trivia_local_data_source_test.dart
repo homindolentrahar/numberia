@@ -13,8 +13,8 @@ import '../../../../core/fixtures/fixture_reader.dart';
 class MockBox extends Mock implements Box {}
 
 void main() {
-  MockBox mockBox;
-  NumberTriviaLocalDataSourceImpl dataSource;
+  MockBox? mockBox;
+  late NumberTriviaLocalDataSourceImpl dataSource;
 
   setUp(() {
     mockBox = MockBox();
@@ -29,11 +29,11 @@ void main() {
       'should return NumberTriviaModel from Hive Box when there is one in the cache',
       () async {
         // Arrange
-        when(mockBox.get(any)).thenReturn(fixture('trivia_cache.json'));
+        when(mockBox!.get(any)).thenReturn(fixture('trivia_cache.json'));
         // Act
         final result = await dataSource.getLastNumberTrivia();
         // Assert
-        verify(mockBox.get(CACHED));
+        verify(mockBox!.get(CACHED));
         expect(result, testNumberTriviaModel);
       },
     );
@@ -42,7 +42,7 @@ void main() {
       'should throw CacheException when there is no a cached value',
       () async {
         // Arrange
-        when(mockBox.get(any)).thenReturn(null);
+        when(mockBox!.get(any)).thenReturn(null);
         // Act
         final call = dataSource.getLastNumberTrivia;
         // Assert
@@ -62,7 +62,7 @@ void main() {
         dataSource.cacheNumberTrivia(testNumberTriviaModel);
         // Assert
         final expectedValue = json.encode(testNumberTriviaModel.toJson());
-        verify(mockBox.put(CACHED, expectedValue));
+        verify(mockBox!.put(CACHED, expectedValue));
       },
     );
   });

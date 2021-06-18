@@ -12,8 +12,8 @@ import '../../../../core/fixtures/fixture_reader.dart';
 class MockHttpClient extends Mock implements http.Client {}
 
 void main() {
-  NumberTriviaRemoteDataSourceImpl dataSource;
-  MockHttpClient mockHttpClient;
+  late NumberTriviaRemoteDataSourceImpl dataSource;
+  MockHttpClient? mockHttpClient;
 
   setUp(() {
     mockHttpClient = MockHttpClient();
@@ -21,12 +21,12 @@ void main() {
   });
 
   void setupMockHttpClientSuccess200() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers')))
+    when(mockHttpClient!.get(any!, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(fixture('trivia.json'), 200));
   }
 
   void setupMockHttpClientFailure404() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers')))
+    when(mockHttpClient!.get(any!, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response('Something went wrong', 404));
   }
 
@@ -43,7 +43,7 @@ void main() {
         // Act
         dataSource.getConcreteNumberTrivia(testNumber);
         // Assert
-        verify(mockHttpClient.get(
+        verify(mockHttpClient!.get(
           Uri.parse("http://numbersapi.com/${testNumber}"),
           headers: {'Content-Type': 'application/json'},
         ));
@@ -87,7 +87,7 @@ void main() {
         // Act
         dataSource.getRandomNumberTrivia();
         // Assert
-        verify(mockHttpClient.get(
+        verify(mockHttpClient!.get(
           Uri.parse("http://numbersapi.com/random"),
           headers: {'Content-Type': 'application/json'},
         ));

@@ -9,9 +9,9 @@ class RevealAnimation extends StatelessWidget {
   final double delay;
 
   const RevealAnimation({
-    Key key,
-    @required this.child,
-    @required this.delay,
+    Key? key,
+    required this.child,
+    required this.delay,
   }) : super(key: key);
 
   @override

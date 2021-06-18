@@ -21,9 +21,9 @@ class NumberTriviaCubit extends Cubit<NumberTriviaState> {
   final GetRandomNumberTrivia _getRandomNumberTrivia;
 
   NumberTriviaCubit({
-    @required InputConverter inputConverter,
-    @required GetConcreteNumberTrivia concrete,
-    @required GetRandomNumberTrivia random,
+    required InputConverter inputConverter,
+    required GetConcreteNumberTrivia concrete,
+    required GetRandomNumberTrivia random,
   })  : assert(inputConverter != null),
         assert(concrete != null),
         assert(random != null),

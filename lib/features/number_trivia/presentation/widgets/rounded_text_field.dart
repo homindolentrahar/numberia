@@ -8,10 +8,10 @@ class RoundedTextField extends StatelessWidget {
   final ValueChanged<String> onChanged;
 
   const RoundedTextField({
-    Key key,
-    @required this.hint,
-    @required this.controller,
-    @required this.onChanged,
+    Key? key,
+    required this.hint,
+    required this.controller,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
